@@ -8,6 +8,13 @@ import re
 
 
 def get_data():
+    def check_index(temp_list: list, id:int):
+        try:
+            out = temp_list[id]
+        except IndexError:
+            out = ''
+        return out
+
     list_files = ['info_1.txt', 'info_2.txt', 'info_3.txt']
     main_data  = [
         'Изготовитель системы',
@@ -38,22 +45,10 @@ def get_data():
     for ind in range(max(lists_len)):
         for _ in range(max(lists_len)):
             lst = []
-            try:
-                lst.append(vendor_sys_list[ind])
-            except IndexError:
-                lst.append('')
-            try:
-                lst.append(name_sys_list[ind])
-            except IndexError:
-                lst.append('')
-            try:
-                lst.append(code_sys_list[ind])
-            except IndexError:
-                lst.append('')
-            try:
-                lst.append(type_sys_list[ind])
-            except IndexError:
-                lst.append('')
+            lst.append(check_index(vendor_sys_list, ind))
+            lst.append(check_index(name_sys_list, ind))
+            lst.append(check_index(code_sys_list, ind))
+            lst.append(check_index(type_sys_list, ind))
         list_main.append(lst)
 
 

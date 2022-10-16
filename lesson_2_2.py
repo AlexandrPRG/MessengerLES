@@ -1,34 +1,21 @@
-import csv
-import re
+import json
 
 
-def get_data():
-    list_files = ['info_1.txt', 'info_2.txt', 'info_3.txt']
-    main_data  = [
-        'Изготовитель системы',
-        'Название ОС',
-        'Код продукта',
-        'Тип системы',
-    ]
-    list_names = [
-        'vendor_sys_list',
-        'name_sys_list',
-        'code_sys_list',
-        'type_sys_list',
-    ]
-    pattern = re.compile('\S+$')
-    for file in list_files:
-        with open(file) as f:
-            f_reader = csv.reader(f)
-            for _ in f:
-                list_csv = next(f_reader)
-                print(list_csv)
-                # print(re.findall(pattern, list_csv[0]))
-    return main_data
+def write_order_to_json(item: str,
+                        quantity:int,
+                        price:float,
+                        buyer:str,
+                        date:str):
+    dict_write = {'item':item,
+                  'quantity':quantity,
+                  'price':price,
+                  'buyer':buyer,
+                  'date':date,
+                  }
+    with open('orders.json', 'a', encoding='utf-8') as f:
+        json.dump(dict_write, f, indent=4, separators=(',', ':'))
 
-def get_list(main_data):
-    return [[] for ind in range(len(main_data))]
 
 if __name__ == '__main__':
-    get_data()
-    # print(get_list(get_data()))
+    write_order_to_json('product_1', 1, 11.1, 'buyer_1', date='21/1/11')
+    write_order_to_json('product_2', 2, 22.2, 'buyer_2', date='22/2/22')
