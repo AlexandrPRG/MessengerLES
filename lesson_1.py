@@ -40,7 +40,7 @@ bytes) и определить тип, содержимое и длину соо
 
 def task_2(check_list: list):
     for el in check_list:
-        el = eval('"b"+"\'"+el+"\'"')
+        el = eval("b"+"\'"+el+"\'")
         print(type(el), el)
 
 
@@ -121,8 +121,8 @@ def task_6(line_list: list):
 
 
 if __name__ == '__main__':
-    task_1(['разработка', 'сокет', 'декоратор'])
-    # task_2(['class', 'function', 'method'])
+    # task_1(['разработка', 'сокет', 'декоратор'])
+    task_2(['class', 'function', 'method'])
     # task_3(['attribute', 'класс', 'функция', 'type'])
     # task_4(['разработка', 'администрирование', 'protocol', 'standard'])
     # task_5()
