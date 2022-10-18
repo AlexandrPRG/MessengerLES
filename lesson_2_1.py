@@ -61,7 +61,7 @@ def get_data():
 
 def write_to_csv(file_name: str):
     data_prepare = get_data()
-    with open(file_name, 'a', encoding='utf-8') as m:
+    with open(file_name, 'a', encoding='utf-8', newline='') as m:
         WRITER = csv.writer(m)
         WRITER.writerows(data_prepare)
 
