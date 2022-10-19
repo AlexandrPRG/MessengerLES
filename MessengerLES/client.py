@@ -30,13 +30,13 @@ def create_presence_msg(account_name='Guest'):
     return {
         ACTION: PRESENCE,
         TIME: time.time(),
-        USER: {ACCOUNT_NAME: account_name},
+        ACCOUNT_NAME: account_name,
     }
 
 
 def get_message(msg):
-    msg = json.load(msg)
-    return msg.decode('utf-8')
+    # msg = json.dump(msg)
+    return msg.encode('utf-8')
 
 
 def main_client():

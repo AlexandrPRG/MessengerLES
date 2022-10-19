@@ -32,7 +32,7 @@ def process_client_message(msg):
     if ACTION in msg and msg[ACTION] == PRESENCE and TIME in msg \
         and USER in msg and msg[USER][ACCOUNT_NAME] == 'Guest':
         return {RESPONSE: 200}
-    return {RESPONSE: 400, ERROR: 'Bad request'}
+    return {ERROR: 'Bad request'}
 
 
 def pars_prm(prm: str):

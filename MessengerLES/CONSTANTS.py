@@ -8,7 +8,7 @@ PRESENCE = ''
 TIME = time.time()
 ACCOUNT_NAME = ''
 USER = {
-    "USER": {'ACCOUNT_NAME': 'Guest'},
+    'ACCOUNT_NAME': 'Guest',
 }
 RESPONSE = 200
-ERROR = ''
+ERROR = '400'
