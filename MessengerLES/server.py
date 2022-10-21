@@ -7,32 +7,13 @@
 -p <port> — TCP-порт для работы (по умолчанию использует 7777);
 -a <addr> — IP-адрес для прослушивания (по умолчанию слушает все доступные адреса).
 """
-import json
-from _socket import socket
 import sys
-
-from _socket import SOCK_STREAM, AF_INET
-
-from MessengerLES.CONSTANTS import DEFAULT_ADDR, DEFAULT_PORT, MAX_CONNETCTIONS, ACTION, PRESENCE, TIME, USER, \
-    ACCOUNT_NAME, RESPONSE, ERROR
-
-
-def send_message(client, msg):
-    CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)
-    CLIENT_SOCKET.connect((client, DEFAULT_PORT))
-    CLIENT_SOCKET.send(msg.encode("utf-8"))
-
-
-def get_message(msg):
-    msg = json.load(msg)
-    return msg.decode('utf-8')
-
-
-def process_client_message(msg):
-    if ACTION in msg and msg[ACTION] == PRESENCE and TIME in msg \
-        and USER in msg and msg[USER][ACCOUNT_NAME] == 'Guest':
-        return {RESPONSE: 200}
-    return {ERROR: 'Bad request'}
+sys.path.append("../")
+import json
+from socket import socket
+from socket import SOCK_STREAM, AF_INET
+from common.CONSTANTS import DEFAULT_PORT, MAX_CONNECTIONS
+from common.msg_utils import get_message, process_client_message
 
 
 def pars_prm(prm: str):
@@ -71,9 +52,9 @@ def server():
 # сокет сервера
     server_sock = socket(AF_INET, SOCK_STREAM)
     server_sock.bind((listen_addr, listen_port))
-    server_sock.listen(MAX_CONNETCTIONS)
+    server_sock.listen(MAX_CONNECTIONS)
     while True:
-        client, client_addr = server_sock._accept()
+        client, client_addr = server_sock.accept()
         try:
             message_client = get_message(client)
             response = process_client_message(message_client)
@@ -84,4 +65,5 @@ def server():
 
 
 if __name__ == '__main__':
+    print(sys.path)
     server()

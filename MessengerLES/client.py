@@ -8,35 +8,15 @@
 addr — ip-адрес сервера;
 port — tcp-порт на сервере, по умолчанию 7777.
 """
-import json
-import time
-
-from _socket import socket
 import sys
 
-from _socket import SOCK_STREAM, AF_INET
 
-from MessengerLES.CONSTANTS import DEFAULT_ADDR, DEFAULT_PORT, MAX_CONNETCTIONS, ACTION, PRESENCE, TIME, USER, \
-    ACCOUNT_NAME, RESPONSE, ERROR
-
-
-def send_message(client, msg):
-    CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)
-    CLIENT_SOCKET.connect((client, DEFAULT_PORT))
-    CLIENT_SOCKET.send(msg.encode("utf-8"))
-
-
-def create_presence_msg(account_name='Guest'):
-    return {
-        ACTION: PRESENCE,
-        TIME: time.time(),
-        ACCOUNT_NAME: account_name,
-    }
-
-
-def get_message(msg):
-    # msg = json.dump(msg)
-    return msg.encode('utf-8')
+sys.path.append("../")
+import json
+from socket import socket
+from socket import SOCK_STREAM, AF_INET
+from common.msg_utils import create_presence_msg, get_message, send_message
+from common.CONSTANTS import MESSAGE
 
 
 def main_client():
@@ -45,9 +25,9 @@ def main_client():
     client_sock = socket(AF_INET, SOCK_STREAM)
     client_sock.connect((server_addr, server_port))
     try:
-        msg_to_server = create_presence_msg()
-        response = get_message(msg_to_server)
-        send_message(server_addr, response)
+        msg_to_server = create_presence_msg(MESSAGE)
+        msg_to_server = get_message(client_sock)
+        send_message(server_addr, msg_to_server)
         client_sock.close()
     except (ValueError, json.JSONDecodeError):
         print('некорректное сообщение от клиента')
