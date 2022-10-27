@@ -17,7 +17,7 @@ logger_clnt.setLevel(logging.DEBUG)
 
 
 if __name__ == '__main__':
-    logger_clnt.critical('critical level event')
-    logger_clnt.error('error  level event')
-    logger_clnt.debug('debug  level event')
-    logger_clnt.info('info  level event')
+    logger_clnt.critical('CLIENT critical level event')
+    logger_clnt.error('CLIENT error  level event')
+    logger_clnt.debug('CLIENT debug  level event')
+    logger_clnt.info('CLIENT info  level event')

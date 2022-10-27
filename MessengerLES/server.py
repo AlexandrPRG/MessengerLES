@@ -14,6 +14,7 @@ from socket import socket
 from socket import SOCK_STREAM, AF_INET
 from common.CONSTANTS import DEFAULT_PORT, MAX_CONNECTIONS
 from common.msg_utils import get_message, process_client_message
+from logs import server_log_config
 
 
 def pars_prm(prm: str):
@@ -36,13 +37,22 @@ def pars_prm(prm: str):
 
                 raise AttributeError
     except AttributeError:
-        print("Неизвестный параметр")
+        # print("Неизвестный параметр")
+        server_log_config.file_loger.critical(
+            f'передан неизвестный параметр {prm}'
+        )
         exit(1)
     except IndexError:
-        print(f'Attribute {prm} missing value')
+        # print(f'Attribute {prm} missing value')
+        server_log_config.file_loger.debug(
+            f'не хватает значения для переданного {prm}'
+        )
         exit(1)
     except ValueError:
-        print('номер порта - число от 1024 до 65535')
+        # print('номер порта - число от 1024 до 65535')
+        server_log_config.file_loger.critical(
+            f'порт менее 1024 ({listen_port})'
+        )
         exit(1)
 
 

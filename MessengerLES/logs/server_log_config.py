@@ -1,5 +1,6 @@
 import sys
 import logging
+import logging.handlers
 sys.path.append('../')
 
 
@@ -14,10 +15,17 @@ file_loger.setFormatter(server_formatter)
 logger_serv.addHandler(server_loger)
 logger_serv.addHandler(file_loger)
 logger_serv.setLevel(logging.DEBUG)
+every_day_log = logging.handlers.TimedRotatingFileHandler(
+    'server.log',
+    encoding='utf-8',
+    interval=1,
+    when='midnight'
+)
+every_day_log.setFormatter(server_formatter)
 
 
 if __name__ == '__main__':
-    logger_serv.critical('critical level event')
-    logger_serv.error('error  level event')
-    logger_serv.debug('debug  level event')
-    logger_serv.info('info  level event')
+    logger_serv.critical('SERVER critical level event')
+    logger_serv.error('SERVER error  level event')
+    logger_serv.debug('SERVER debug  level event')
+    logger_serv.info('SERVER info  level event')
